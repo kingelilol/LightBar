@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2019 Elias Harrer
+ * Released under the MIT license. Read 'LICENSE' for more information.
+ */
+
 #include <avr/io.h>
 #define F_CPU 12000000UL
 #include <util/delay.h>

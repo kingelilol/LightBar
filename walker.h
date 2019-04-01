@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2019 Elias Harrer
+ * Released under the MIT license. Read 'LICENSE' for more information.
+ */
 #ifndef WALKER_H
 #define WALKER_H
 #include "Globals.h"
