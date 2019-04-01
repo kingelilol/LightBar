@@ -1,20 +1,29 @@
-output: main.o SK6812.o Globals.o walker.o
-	avr-gcc -mmcu=atmega328p main.o SK6812.o Globals.o walker.o -O3 -o output
+# Variables
+CC = avr-gcc
+CC_FLAGS = -mmcu=atmega328p -O3
 
-main.o: main.cpp SK6812.h Globals.cpp Globals.h
-	avr-gcc -mmcu=atmega328p main.cpp -O3 -c
+# File names
+EXEC = run
+SOURCES = $(wildcard *.cpp)
+OBJECTS = $(SOURCES:.cpp=.o)
+DEPS = $(OBJECTS:.o=.d)
 
-SK6812.o: SK6812.cpp SK6812.h Globals.cpp Globals.h
-	avr-gcc -mmcu=atmega328p SK6812.cpp -O3 -c
+$(EXEC): $(OBJECTS)
+	$(CC) $(CC_FLAGS) $(OBJECTS) -o $(EXEC)
 
-Globals.o: Globals.cpp Globals.h 
-	avr-gcc -mmcu=atmega328p Globals.cpp -O3 -c
+%.o: %.cpp
+	$(CC) $(CC_FLAGS) -MMD -MP -c $< -o $@
 
-walker.o: walker.cpp walker.h
-	avr-gcc -mmcu=atmega328p walker.cpp -O3 -c
+all: $(EXEC)
 
 clean:
-	rm -f main.o SK6812.o walker.o Globals.o output
+	rm -f $(OBJECTS) $(EXEC) $(DEPS)
 
-install: output
-	avrdude -c arduino -p atmega328p -U flash:w:output -P /dev/ttyUSB0 -v -C //etc/avrdude.conf -b57600	
+rebuild: clean all
+
+reinstall: clean install
+
+install: $(EXEC)
+	avrdude -c arduino -p atmega328p -U flash:w:$(EXEC) -P /dev/ttyUSB0 -v -C //etc/avrdude.conf -b57600
+
+-include $(DEPS)
