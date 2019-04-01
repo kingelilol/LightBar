@@ -2,8 +2,10 @@
 #define F_CPU 12000000UL
 #include <util/delay.h>
 #include "Globals.h"
-
-#define T0H //_delay_us(0.3)//delay_us(0.3)
+//on my hardware the delays are a liltle bit funky
+//The right delys shold be the comented delays
+//you can find more info at https://cdn-shop.adafruit.com/product-files/2757/p2757_SK6812RGBW_REV01.pdf
+#define T0H //delay_us(0.3)
 #define T0L _delay_us(0.9)//_delay_us(0.9)
 #define T1H _delay_us(0.6)//_delay_us(0.6)
 #define T1L _delay_us(0.3)//_delay_us(0.6)
