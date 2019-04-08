@@ -11,7 +11,7 @@ walker::walker(int pos,struct color col,int ste):pos(pos),ownColor(col),steps(st
 walker::walker(int pos,uint8_t g,uint8_t r,uint8_t b,uint8_t w,int ste):pos(pos),steps(ste){
   ownColor.g=g;
   ownColor.r=r;
-  ownColor.b=g;
+  ownColor.b=b;
   ownColor.w=w;
 }
 void walker::next(int c){
