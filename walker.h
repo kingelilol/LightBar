@@ -17,6 +17,7 @@ class walker{
   void turn();
   void next(int c);
   int getPos();
+  int getSteps();
   bool colide(walker* other);
   ~walker();
   void reset();

@@ -5,8 +5,7 @@
 #define F_CPU 12000000UL
 #include <util/delay.h>
 #include <avr/io.h>
-
-#define COLORDIF 100
+#define COLORDIF 240
 #define LED_PIN PB5
 
 #include "Globals.h"
@@ -29,32 +28,24 @@ void dimDown(){
 }
 
 void collision(walker **objects,int s){
-  // for(int i=0;i<s;++i){
-  //   for(int j=0;j<s;++j){
-  //     if(j==i)continue;
-  //     if(abs(objects[i]->getPos()-objects[j]->getPos())%(SIZE)<=1){
-  //       objects[i]->turn();
-  //     }
-  //   }
-  // }
   for(int i=0;i<s;++i){
     for(int j=i+1;j<s;++j){
-      if(j==i)continue;
       objects[i]->colide(objects[j]);
+      }
     }
-  }
 }
+
 int main(){
   DDRB |= (1<<LED_PIN);
 
   walker *walkers[6];
   //             g,  r,  b,  w
-  walker w1( 0,255,  0,  0,  0,1);
-  walker w2(10,  0,255,  0,  0,2);
+  walker w1( 0,225,  0,  0,  0,-1);
+  walker w2(10,  0,225,  0,  0,2);
   walker w3(20,  0,  0,255,  0,3);
-  walker w4(30,  0,  0,  0,255,4);
-  walker w5(40,255,255,  0,  0,5);
-  walker w6(50,  0,255,255,  0,6);
+  walker w4(30,255,  0,255,  0,4);
+  walker w5(40,225,225,  0,  0,5);
+  walker w6(50,  0,225,225,  0,6);
 
   walkers[0]=&w1;
   walkers[1]=&w2;
@@ -66,10 +57,10 @@ int main(){
   uint8_t counter=0;
   while(1){
     dimDown();
-    //collision(walkers,6);
+    collision(walkers,6);
     for(int i=0;i<6;++i)walkers[i]->next(counter);
     sendData();
-    //_delay_ms(100);
+     // _delay_ms(50);
     ++counter;
   }
   return 0;

@@ -6,6 +6,7 @@
 #include "walker.h"
 #include <stdlib.h>
 
+
 walker::walker(int pos,struct color col,int ste):pos(pos),ownColor(col),steps(ste){
 }
 walker::walker(int pos,uint8_t g,uint8_t r,uint8_t b,uint8_t w,int ste):pos(pos),steps(ste){
@@ -26,15 +27,18 @@ void walker::next(int c){
 }
 bool walker::colide(walker* other){
   if(this==other)return false;
-  if(abs(other->getPos()-this->getPos())%(SIZE)<=1){
-    other->turn();
+  char dir = (this->getSteps()>0)?1:-1;
+  if((abs(this->getPos()+dir-other->getPos())<=1)&&((dir>0)!=(other->getSteps()>0))){
     this->turn();
-    return true;
+    other->turn();
   }
   return false;
 }
 int walker::getPos(){
   return pos;
+}
+int walker::getSteps(){
+  return steps;
 }
 void walker::turn(){
   steps*=-1;
